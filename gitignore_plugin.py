@@ -43,8 +43,11 @@ def update_file_exclude_patterns():
     "extra_file_exclude_patterns" and "extra_folder_exclude_patterns" settings.
     """
     s = sublime.load_settings("Preferences.sublime-settings")
+    only_goto_anything = s.get('gitignorer_only_goto_anything', False)
+
     file_exclude_patterns = s.get('extra_file_exclude_patterns', []) or []
     folder_exclude_patterns = s.get('extra_folder_exclude_patterns', []) or []
+    binary_file_patterns = s.get('extra_binary_file_patterns', []) or []
     for path in all_ignored_paths():
         is_directory = os.path.isdir(path)
         if platform.system() == 'Windows':
@@ -57,21 +60,31 @@ def update_file_exclude_patterns():
             # OS-standard separtors and include the colon after the drive letter on
             # Windows, so we need to convert them here to Sublime-format.
             path = windows_path_to_sublime_path(path)
+
         if is_directory:
-            folder_exclude_patterns.append(path)
+            if only_goto_anything:
+                binary_file_patterns.append('{}/**/*'.format(path))
+            else:
+                 folder_exclude_patterns.append(path)
         else:
-            file_exclude_patterns.append(path)
+            if only_finder:
+                binary_file_patterns.append(path)
+            else:
+                file_exclude_patterns.append(path)
 
     new_files = set(file_exclude_patterns)
     old_files = set(s.get('file_exclude_patterns', []) or [])
     new_folders = set(folder_exclude_patterns)
     old_folders = set(s.get('folder_exclude_patterns', []) or [])
+    new_binary_files = set(binary_file_patterns)
+    old_binary_files = set(s.get('binary_file_patterns', []) or [])
 
     # Only make changes if anything has actually changed, to avoid spamming the
     # sublime console
-    if new_files != old_files or new_folders != old_folders:
+    if new_files != old_files or new_folders != old_folders or new_binary_files != old_binary_files:
         s.set('file_exclude_patterns', list(file_exclude_patterns))
         s.set('folder_exclude_patterns', list(folder_exclude_patterns))
+        s.set('binary_file_patterns', list(binary_file_patterns))
         sublime.save_settings("Preferences.sublime-settings")
 
 def all_ignored_paths():
