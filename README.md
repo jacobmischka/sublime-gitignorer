@@ -11,9 +11,11 @@ Usage instructions:
     * Press <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd> (<kbd>CMD</kbd>+<kbd>SHIFT</kbd>+<kbd>P</kbd> on Mac)
     * Select "Install Package"
     * Search for the ***Gitignored File Excluder*** and press <kbd>Enter</kbd>.
-* `sublime-gitignorer` will regularly check all your open folders for files that are ignored by Git and update your `"file_exclude_patterns"` and `"folder_exclude_patterns"` settings in Sublime to match the list of files and folders ignored by Git.
+* `sublime-gitignorer` will regularly check all your open folders for files that are ignored by Git and update your `"file_exclude_patterns"`, `"folder_exclude_patterns"`, and `"binary_file_patterns"` settings in Sublime to match the list of files and folders ignored by Git.
 * After you create a new Git-ignored file or update your `.gitignore` files, the files should be hidden from your project within 5 seconds.
-* Since the `"file_exclude_patterns"` and `"folder_exclude_patterns"` settings are now being managed programatically, if you want to *manually* set file or folder exclusion patterns in sublime, you can use the `"extra_file_exclude_patterns"` and `"extra_folder_exclude_patterns"` settings. Any file paths you list in here will automatically be included in your `"file_exclude_patterns"` and `"folder_exclude_patterns"` in addition to Git-ignored paths.
-* If you already have `"file_exclude_patterns"` or `"folder_exclude_patterns"` set, there is no need to back them up prior to installing this plugin; they will be automatically migrated to the `"extra_file_exclude_patterns"` and `"extra_folder_exclude_patterns"` settings on first launch.
+* Since the `"file_exclude_patterns"`, `"folder_exclude_patterns"`, and `"binary_file_patterns"` settings are now being managed programatically, if you want to *manually* set file or folder exclusion patterns in sublime, you can use the `"extra_file_exclude_patterns"`, `"extra_folder_exclude_patterns"`, and `"extra_binary_file_patterns"` settings. Any file paths you list in here will automatically be included in your `"file_exclude_patterns"`, `"folder_exclude_patterns"`, and `"binary_file_patterns"` in addition to Git-ignored paths.
+* If you already have `"file_exclude_patterns"`, `"folder_exclude_patterns"`, or `"binary_file_patterns"` set, there is no need to back them up prior to installing this plugin; they will be automatically migrated to the `"extra_file_exclude_patterns"`, `"extra_folder_exclude_patterns"`, and `"extra_binary_file_patterns"` settings on first launch.
+
+To only ignore in GoTo Anything and not the sidebar, set `"gitignorer_only_goto_anything": true` in your settings.
 
 Currently tested on Ubuntu and Windows in Sublime Text 2 and Sublime Text 3. I haven't tested on Mac yet but it should work there too.
